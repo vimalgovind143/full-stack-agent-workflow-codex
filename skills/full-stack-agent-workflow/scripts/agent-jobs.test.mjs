@@ -11,12 +11,12 @@ const files = [];
 function ledgerFile() { const dir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-jobs-")); files.push(dir); return path.join(dir, "agent-jobs.json"); }
 afterEach(() => files.splice(0).forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 function setup(file) { const plan = createPlan({ id: "plan", title: "Plan", orchestrator: "lead", orchestratorToken: "orch" }, file); return { ...plan, file }; }
-function job(file, values = {}) { return upsertJob({ id: "job", planId: "plan", title: "Job", canonicalKey: "console agent ledger", model: "gpt-6.1-sol", dependencies: [], writeResources: ["D:\\GitHub\\amthal-workspace\\workspace-console\\agent-jobs.mjs"], orchestrator: "lead", orchestratorToken: "orch", ...values }, file); }
+function job(file, values = {}) { return upsertJob({ id: "job", planId: "plan", title: "Job", canonicalKey: "console agent ledger", model: "gpt-6.2-sol", dependencies: [], writeResources: ["D:\\GitHub\\amthal-workspace\\workspace-console\\agent-jobs.mjs"], orchestrator: "lead", orchestratorToken: "orch", ...values }, file); }
 function reserve(file, values = {}) { return reserveJob({ orchestrator: "lead", orchestratorToken: "orch", ...values }, file); }
 
 test("rejects Astra and duplicate active canonical keys", () => {
   const { file } = setup(ledgerFile());
-  assert.throws(() => job(file, { model: "gpt-6-astra" }), /Astra is not permitted/);
+  assert.throws(() => job(file, { model: "gpt-6.2-astra" }), /Astra is not permitted/);
   job(file);
   assert.throws(() => job(file, { id: "job-2", canonicalKey: "CONSOLE   agent ledger", writeResources: ["D:\\other\\elsewhere.txt"] }), /canonicalKey/);
 });
@@ -71,7 +71,7 @@ test("dashboard data redacts worker and orchestrator capabilities", () => {
 test("plan closure rejects unfinished jobs and workers cannot dispatch", () => {
   const { file } = setup(ledgerFile()); job(file);
   assert.throws(() => transitionPlan({ id: "plan", action: "complete", orchestrator: "lead", orchestratorToken: "orch" }, file), /terminal/);
-  assert.throws(() => upsertJob({ id: "other", planId: "plan", title: "Other", canonicalKey: "other", model: "gpt-6.1-sol", dependencies: [], writeResources: [], orchestrator: "worker", orchestratorToken: "no" }, file), /not authorized/);
+  assert.throws(() => upsertJob({ id: "other", planId: "plan", title: "Other", canonicalKey: "other", model: "gpt-6.2-sol", dependencies: [], writeResources: [], orchestrator: "worker", orchestratorToken: "no" }, file), /not authorized/);
 });
 test("separate child processes contend on the exclusive reservation lock", async () => {
   const { file } = setup(ledgerFile()); job(file);

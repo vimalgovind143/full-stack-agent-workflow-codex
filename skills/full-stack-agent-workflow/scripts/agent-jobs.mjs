@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_LEDGER_FILE = path.join(HERE, "data", "agent-jobs.json");
-const ALLOWED_MODELS = new Set(["gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna"]);
+const ALLOWED_MODELS = new Set(["gpt-6.2-sol", "gpt-6.1-terra", "gpt-6-luna"]);
 const TERMINAL = new Set(["completed", "failed", "cancelled"]);
 const LOCKING = new Set(["reserved", "started", "review", "blocked"]);
 

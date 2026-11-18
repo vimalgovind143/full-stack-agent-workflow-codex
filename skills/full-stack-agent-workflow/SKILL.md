@@ -9,16 +9,16 @@ Use these exact roles for work under this skill:
 
 | Role | Model | Responsibility |
 | --- | --- | --- |
-| Main orchestrator (user-selected Astra or Sol) | gpt-6-astra or gpt-6.1-sol | Scope, plan, allocate work, review diffs, assess verification, report results |
-| Sol Analyst (`sol_analyst`) | gpt-6.1-sol | Read-only investigation, root cause, reuse map, implementation recommendations |
+| Main orchestrator (user-selected Astra or Sol) | gpt-6.2-astra or gpt-6.2-sol | Scope, plan, allocate work, review diffs, assess verification, report results |
+| Sol Analyst (`sol_analyst`) | gpt-6.2-sol | Read-only investigation, root cause, reuse map, implementation recommendations |
 | Terra Engineer (`terra_engineer`) | gpt-6.1-terra | Code changes and focused build/test verification within assigned files |
 | Terra Tester (`terra_tester`) | gpt-6.1-terra | Test scenarios, scoped test authoring, execution, and evidence-based reports |
-| Sol Engineer (`sol_engineer`) | gpt-6.1-sol | Complex implementation or explicit escalation from Terra |
+| Sol Engineer (`sol_engineer`) | gpt-6.2-sol | Complex implementation or explicit escalation from Terra |
 | Luna Assistant (`luna_assistant`) | gpt-6-luna | Exact lookups, typo fixes, formatting, prescribed repetitive edits, routine checks |
 
 ## Prerequisite
 
-Prefer Sol (`gpt-6.1-sol`) for normal orchestration; select Astra (`gpt-6-astra`) for demanding work when the user chooses it. Both can orchestrate this workflow. A skill cannot change the running main model; follow the user's selection and never silently switch it. If model identity is unavailable, disclose that the selection cannot be independently verified.
+Prefer Sol (`gpt-6.2-sol`) for normal orchestration; select Astra (`gpt-6.2-astra`) for demanding work when the user chooses it. Both can orchestrate this workflow. A skill cannot change the running main model; follow the user's selection and never silently switch it. If model identity is unavailable, disclose that the selection cannot be independently verified.
 
 “Main orchestrator” below means the selected Astra or Sol main task. The `sol_analyst` profile is a read-only worker role, not the instructions for a Sol main orchestrator. A Sol main orchestrator has the same dispatch, tracking, review, and completion responsibilities as Astra. It may delegate a separate bounded analysis to Sol when useful; do not create a second orchestration layer.
 
@@ -43,9 +43,9 @@ All subagents are limited to low or medium reasoning. Never use high, xhigh, max
 
 With collaboration.spawn_agent, use an explicit model and fork_turns: "none" for a self-contained prompt (or a bounded positive history count if genuinely needed). Full-history forks inherit the parent model and cannot select another model.
 
-- Sol Analyst: model: "gpt-6.1-sol", reasoning_effort: "medium".
+- Sol Analyst: model: "gpt-6.2-sol", reasoning_effort: "medium".
 - Terra Engineer: model: "gpt-6.1-terra", reasoning_effort: "medium".
-- Sol Engineer (complex implementation): model: "gpt-6.1-sol", reasoning_effort: "medium".
+- Sol Engineer (complex implementation): model: "gpt-6.2-sol", reasoning_effort: "medium".
 - Terra Tester: model: "gpt-6.1-terra", reasoning_effort: "medium".
 - Luna: model: "gpt-6-luna", reasoning_effort: "low".
 - Reuse existing workers with followup_task for corrections and related work.
@@ -66,7 +66,7 @@ When collaboration.spawn_agent exposes agent_type, select the matching sol_analy
 
 Before dispatch, announce the specialist, exact model ID, reasoning effort, and assignment in a short progress message. Begin each assignment with the same identity header and require the worker to repeat it in its first progress message and final result. Report the models actually requested through the tools in the final summary when agents were used. Distinguish configured/requested model from runtime-verified model identity; never infer successful routing from a display name alone.
 
-A skill controls names and message content, not the application's native model badges or details layout. Do not promise to change that UI. Only the main task orchestrates; Astra, when selected, is main-only. NEVER spawn an Astra subagent for any purpose, including planning, review, fallback, or escalation. Every child must explicitly use GPT-6.1-Sol, GPT-6.1-Terra, or GPT-6-Luna. Never omit the child model or use a full-history fork. If a requested worker model is unavailable, report the blocked routing; do not substitute Astra.
+A skill controls names and message content, not the application's native model badges or details layout. Do not promise to change that UI. Only the main task orchestrates; Astra, when selected, is main-only. NEVER spawn an Astra subagent for any purpose, including planning, review, fallback, or escalation. Every child must explicitly use GPT-6.2-Sol, GPT-6.1-Terra, or GPT-6-Luna. Never omit the child model or use a full-history fork. If a requested worker model is unavailable, report the blocked routing; do not substitute Astra.
 
 ## Luna routing
 

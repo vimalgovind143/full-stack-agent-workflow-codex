@@ -6,11 +6,11 @@ Personal Codex skill and named agents for Windows and macOS. Astra or Sol orches
 
 | Profile | Model | Effort | Scope |
 | --- | --- | --- | --- |
-| astra_orchestrator | gpt-6-astra | high | Main task only; optional user selection |
-| sol_analyst | gpt-6.1-sol | medium | Read-only analysis |
+| astra_orchestrator | gpt-6.2-astra | high | Main task only; optional user selection |
+| sol_analyst | gpt-6.2-sol | medium | Read-only analysis |
 | terra_engineer | gpt-6.1-terra | medium | Default scoped implementation |
 | terra_tester | gpt-6.1-terra | medium | Testing and evidence reports |
-| sol_engineer | gpt-6.1-sol | medium | Complex implementation/escalation |
+| sol_engineer | gpt-6.2-sol | medium | Complex implementation/escalation |
 | luna_assistant | gpt-6-luna | low | Simple prescribed work |
 
 Sol can also orchestrate as the main user-selected model. The analyst profile is not an orchestrator profile. Skills cannot change an already-running main model. Model access and named-profile loading depend on your Codex client/account.

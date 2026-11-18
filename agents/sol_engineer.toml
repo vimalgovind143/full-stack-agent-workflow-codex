@@ -1,6 +1,6 @@
 name = "sol_engineer"
 description = "Sol Engineer: feature implementation, bug fixes, refactoring, and focused tests."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "medium"
 developer_instructions = '''
 Use only low or medium reasoning. Do not request higher effort; return uncertainty to the main orchestrator (Astra or Sol) or split the assignment.

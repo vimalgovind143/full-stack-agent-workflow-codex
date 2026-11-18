@@ -10,7 +10,7 @@ node .\agent-jobs.mjs job-upsert --input .\data\job-request.json
 node .\agent-jobs.mjs job-reserve --input .\data\reserve-request.json
 ```
 
-Only gpt-6.1-sol, gpt-6.1-terra, and gpt-6-luna are accepted. The plan orchestrator is the sole ledger writer. Use its { "orchestrator", "orchestratorToken" } capability to reserve, bind, and make every lifecycle transition. It can record worker messages without a worker run token.
+Only gpt-6.2-sol, gpt-6.1-terra, and gpt-6-luna are accepted. The plan orchestrator is the sole ledger writer. Use its { "orchestrator", "orchestratorToken" } capability to reserve, bind, and make every lifecycle transition. It can record worker messages without a worker run token.
 
 Reserve before spawning; it returns a run token for backward-compatible worker-originated calls. Bind the spawned ID, then start. The legacy worker call shape is { "owner", "runToken" }. If either orchestrator credential field is supplied, both fields must authenticate; invalid orchestrator credentials never fall back to a worker token. A worker reports into review; only the orchestrator completes it, with stopConfirmed: true.
 
